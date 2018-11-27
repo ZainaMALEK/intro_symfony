@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}  liste des couleurs {% endblock %}
+
+{% block body %}
+    <h1>Liste des couleurs</h1>
+    <table class="table table-dark table-striped">
+      <thead class="">
+        <tr>
+          <th>Name in english</th>
+          <th>Nom en français</th>
+          <th>Hexadecimal</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for color in colors %}
+          <tr>
+            <td>{{color.nameEn}}</td>
+            <td>{{color.nameFr}}</td>
+            <td>{{color.hexa}}</td>
+            <td>
+              <a href="/color/{{color.id}}/edit" class="btn btn-secondary btn-sm">Update</a>
+              <a href="/color/{{color.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+ {% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}  Ajout d'une couleur {% endblock %}
+
+
+{% block body %}
+
+    <h1>Ajout d'une couleur</h1>
+    {% if method =='POST' %}
+    <section>
+      {% if success %}
+        <p>couleur enregistrée</p>
+      {% else %}
+
+        <p>Echec</p>
+      {% endif %}
+    </section>
+    {% endif %}
+    <form  method="post">
+      <input type="text" name="nameEn" placeholder="Nom en anglais">
+      <input type="text" name="nameFr" placeholder="Nom en français">
+      <input type="text" name="hexa" placeholder="Couleur en hexadécimal">
+      <button>Enregistrer</button>
+
+    </form>
+  {% endblock %}
