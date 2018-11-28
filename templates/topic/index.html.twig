@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+<a href="{{path('topic_add')}}">Ajout d'un thème</a>
+<ul>
+  {% for topic in topics %}
+      <li>{{topic.name}}</li>
+  {% endfor %}
+</ul>
+{% endblock %}
