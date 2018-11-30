@@ -28,10 +28,32 @@ class Country
      */
     private $proverbs;
 
-    public function __construct($name)
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="country")
+     */
+    private $users;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\City", inversedBy="country", cascade={"persist", "remove"})
+     */
+    private $capital;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $population;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $flag;
+
+
+    public function __construct($name='')
     {
         $this->name = $name;
         $this->proverbs = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -81,4 +103,74 @@ class Country
 
         return $this;
     }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setCountry($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            // set the owning side to null (unless already changed)
+            if ($user->getCountry() === $this) {
+                $user->setCountry(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCapital(): ?City
+    {
+        return $this->capital;
+    }
+
+    public function setCapital(?City $capital): self
+    {
+        $this->capital = $capital;
+
+        return $this;
+    }
+
+    public function getPopulation(): ?int
+    {
+        return $this->population;
+    }
+
+    public function setPopulation(?int $population): self
+    {
+        $this->population = $population;
+
+        return $this;
+    }
+
+    public function getFlag(): ?string
+    {
+        return $this->flag;
+    }
+
+    public function setFlag(?string $flag): self
+    {
+        $this->flag = $flag;
+
+        return $this;
+    }
+
+
+
 }

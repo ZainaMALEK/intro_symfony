@@ -10,15 +10,19 @@ use App\Form\ProverbType;
 
 class ProverbController extends AbstractController
 {
-    /**
-     * @Route("/proverb", name="proverb")
-     */
-    public function index()
-    {
+      /**
+       * @Route("/proverb", name="proverb")
+       */
+      public function index()
+      {
+        $proverbs = $this->getDoctrine()
+          ->getRepository(Proverb::class)
+          ->findAll();
+
         return $this->render('proverb/index.html.twig', [
-            'controller_name' => 'ProverbController',
+            'proverbs' => $proverbs
         ]);
-    }
+      }
 
     /**
      * @Route("/proverb/add", name="proverb_add")
@@ -29,6 +33,17 @@ class ProverbController extends AbstractController
 
         $proverb = new Proverb();
         $form = $this->createForm(ProverbType::class, $proverb);
+
+        // traitement du submit
+        $form->handleRequest($request);
+        if ($form->isSubmitted())
+        {
+          $proverb = $form->getData();
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($proverb);
+          $em->flush();
+          return $this->redirectToRoute('proverb');
+        }
 
 
         return $this->render('proverb/add.html.twig', [

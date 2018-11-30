@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <td>Lastname</td>
+      <td>Firstname</td>
+      <td>Email</td>
+      <td>Country</td>
+      <td>Role</td>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for user in users %}
+    <tr>
+      <td>{{user.lastname}}</td>
+      <td>{{user.firstname}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.country.name}}</td>
+      <td>{{user.role.name}}</td>
+    </tr>
+  {% endfor %}
+
+  </tbody>
+  </table>
+  {% endblock %}

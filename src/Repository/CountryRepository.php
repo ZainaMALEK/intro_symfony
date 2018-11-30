@@ -22,19 +22,35 @@ class CountryRepository extends ServiceEntityRepository
     // /**
     //  * @return Country[] Returns an array of Country objects
     //  */
-    /*
-    public function findByExampleField($value)
+//aproche query builder
+    public function findByPopNumber($num)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('c.population > :num')
+            ->setParameter('num', $num)
+            ->orderBy('c.name', 'ASC')
+            //->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+//approche DQL
+    public function findAllCustom()
+    {
+
+      $em = $this->getEntityManager();
+      $query = $em->createQuery(
+        'SELECT c FROM App\Entity\Country c
+        ');//renvois un tableau associatif de forme ['name=>'France]
+      return $query->execute();
+
+    }
+    //approche DQL exemple2
+    // public function findBySearch($search){
+    //   $em = $this->getEntityManager();
+    //   $query = $em->createQuery(SELECT c FROM App/Entity/Country)
+    // }
+
 
     /*
     public function findOneBySomeField($value): ?Country
